@@ -5,7 +5,7 @@
   <title>Login Form</title>
   <style>
     body {
-      background-color: #FAE100; /* 카카오 노란 배경 */
+      background-color: #FAE100;
       margin: 0;
       padding: 0;
       font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
@@ -108,12 +108,12 @@
 
     <button type="submit">Login</button>
   </form>
+
   <div class="kakao-login">
     <a th:href="${kakaoLoginUrl}">
       <img th:src="@{/images/kakao_login_medium_narrow.png}" alt="카카오 로그인 버튼">
     </a>
   </div>
-
 </div>
 </body>
 </html>

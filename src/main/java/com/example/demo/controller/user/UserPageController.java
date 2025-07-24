@@ -1,5 +1,6 @@
 package com.example.demo.controller.user;
 
+
 import com.example.demo.config.KakaoProperties;
 import com.example.demo.dto.user.UserRequestDto;
 import com.example.demo.entity.User;
@@ -22,12 +23,12 @@ public class UserPageController {
   public UserPageController(UserService userService, KakaoProperties kakaoProperties) {
     this.userService = userService;
     this.kakaoProperties = kakaoProperties;
+
   }
 
   @GetMapping("/login-page")
   public String loginPage(Model model) {
     model.addAttribute("userRequestDto", new UserRequestDto());
-
     String kakaoLoginUrl = "https://kauth.kakao.com/oauth/authorize"
         + "?response_type=code"
         + "&client_id=" + kakaoProperties.getClientId()

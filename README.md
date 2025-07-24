@@ -3,6 +3,7 @@
 스프링 부트를 활용한 **위시리스트(WishList)** 관리 REST API 프로젝트입니다.
 <br><br>
 ---
+
 ## 추가 구현 기능(07.24)
 - 카카오 로그인 구현
 
@@ -79,3 +80,4 @@ H2 Database (in-memory)
 JUnit5 (E2E 테스트 코드 작성)
 
 Jwt(Spring Security 사용 X)
+
