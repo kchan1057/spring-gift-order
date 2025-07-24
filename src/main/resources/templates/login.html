@@ -5,7 +5,10 @@
   <title>Login Form</title>
   <style>
     body {
-      background-color: skyblue;
+      background-color: #FAE100; /* 카카오 노란 배경 */
+      margin: 0;
+      padding: 0;
+      font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
     }
 
     #loginbox {
@@ -16,10 +19,20 @@
       height: 100vh;
     }
 
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
     .form-row {
       display: flex;
       align-items: center;
-      margin: 10px;
+      margin: 10px 0;
     }
 
     label {
@@ -27,26 +40,52 @@
       text-align: right;
       margin-right: 10px;
       font-weight: bold;
+      color: #3C1E1E;
     }
 
     input {
-      padding: 5px;
+      padding: 8px;
       font-size: 16px;
+      width: 200px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
     }
 
     button {
-      margin-top: 10px;
-      padding: 5px 10px;
-      margin-left: 90px;
+      margin: 16px 0 0 90px;
+      padding: 8px 10px;
       width: 200px;
-      height: 35px;
-      font-size: 20px;
+      height: 40px;
+      font-size: 18px;
+      font-weight: bold;
+      background-color: #3C1E1E;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #2b1616;
     }
 
     .error {
       color: red;
       font-weight: bold;
       margin-bottom: 10px;
+      text-align: center;
+      width: 100%;
+    }
+
+    .kakao-login {
+      margin-top: 20px;
+      margin-left: 90px;
+    }
+
+    .kakao-login img {
+      width: 200px;
+      height: auto;
+      display: block;
     }
   </style>
 </head>
@@ -69,6 +108,12 @@
 
     <button type="submit">Login</button>
   </form>
+  <div class="kakao-login">
+    <a th:href="${kakaoLoginUrl}">
+      <img th:src="@{/images/kakao_login_medium_narrow.png}" alt="카카오 로그인 버튼">
+    </a>
+  </div>
+
 </div>
 </body>
 </html>
