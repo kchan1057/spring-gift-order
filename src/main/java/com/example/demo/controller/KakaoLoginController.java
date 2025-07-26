@@ -20,6 +20,8 @@ public class KakaoLoginController {
 
   @GetMapping("/callback")
   public ResponseEntity<?> callback(@RequestParam("code") String code){
+    //System.out.println("카카오 인가 코드: " + code);
+    String accessToken = kakaoService.getAccessTokenFromKakao(code);
     return new ResponseEntity<>(HttpStatus.OK);
   }
 }

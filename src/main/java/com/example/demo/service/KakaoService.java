@@ -14,7 +14,6 @@ public class KakaoService {
   private final KakaoProperties kakaoProperties;
 
   private static final String KAUTH_TOKEN_URL_HOST = "https://kauth.kakao.com";
-  private static final String KAUTH_USER_URL_HOST = "https://kapi.kakao.com";
 
   public KakaoService(KakaoProperties kakaoProperties) {
     this.kakaoProperties = kakaoProperties;
@@ -37,6 +36,8 @@ public class KakaoService {
         .bodyToMono(KakaoTokenResponseDto.class)
         .block();
 
+    //System.out.println("Access Token: " + kakaoTokenResponseDto.getAccessToken());
+    //System.out.println("Refresh Token: " + kakaoTokenResponseDto.getRefreshToken());
     return kakaoTokenResponseDto.getAccessToken();
   }
 }

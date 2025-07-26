@@ -9,7 +9,7 @@ public class KakaoTokenResponseDto {
   @JsonProperty("token_type")
   public String tokenType;
 
-  @JsonProperty("access_type")
+  @JsonProperty("access_token")
   public String accessToken;
 
   @JsonProperty("id_token")
