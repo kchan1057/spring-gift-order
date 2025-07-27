@@ -3,19 +3,14 @@
 스프링 부트를 활용한 **위시리스트(WishList)** 관리 REST API 프로젝트입니다.
 <br><br>
 ---
-## 추가 구현 기능(07.21)
-- 생성한 클래스: ProductOptionResponseDto, ProductOptionRequestDto, ProductOption(Entity), OptionService, OptionRepository
-- 옵션 기능 추가: product_id를 외래키로 받아서 해당 물품에 해당하는 옵션을 저장하고 불러올 수 있도록 구현. 옵션이 최소한 1개는 존재해야 한다는
-요구사항에 맞게 product_option테이블에 초기 데이터를 insert해줘서 진행함.
-- quantity를 지정된 숫자만큼 뺄 수 있는 기능을 만들고, 이는 ProductOption 엔티티에 구현을 함.(수량에 대한 예외처리도 엔티티에서 진행.)
-- 중복된 옵션이 존재하면 안되기 때문에 JPA의 쿼리 메소드 기능을 이용해 product와 optionId를 받아서 중복처리르 하는 기능을 추가하였음.
-- 문자 패턴과 길이 수에 관한 제약조건은 ProductOptionRequestDto에 구현하였음.
-- 테스트 코드 구현
 
-## 구현해보고 싶은 기능
-- product에 option을 List로 넣어서 product를 get하게 되면 옵션들까지 같이 보이게끔 기능 구현.
-- option 자체를 컨트롤러로 분리해서 CRUD를 구성(현재는 ProductController에 save와 get만 구현.)
-
+## 추가 구현 기능(07.24)
+- 카카오 로그인 구현
+- [X] 카카오 API를 사용하기 위한 애플리케이션을 등록.
+- [X] 카카오계정 로그인을 통해 인증 코드 받기. -> 이를 Controller에서 RequestParam으로 받은 후 getAccessToken 메소드의 매개변수로 삽입.
+- [X] 토큰 받기를 읽고 액세스 토큰을 추출하기. -> Service-Layer에서 getAccessToken을 실행 후 액세스 토큰과 리프레쉬 토큰 발급.
+- [X] 앱 키, 인가 코드가 유출 방지 고려. -> .gitignore로 관리
+- [X] (선택)  인가 코드를 받는 방법이 불편한 경우 카카오 로그인 화면을 구현. -> 기존의 로그인 html에 카카오 로그인 버튼을 넣어서 작동하게끔 유도.
 ---
 
 ###  상품 목록 조회
@@ -88,5 +83,5 @@ H2 Database (in-memory)
 
 JUnit5 (E2E 테스트 코드 작성)
 
-Jwt(Spring Security 사용 X): refreshToken accessToken을 이용한 회원 로그인
--> 미션의 난이도를 고려해 RefreshToken은 명시만 해놓되 이용은 최대한 자제.(멘토님 조언)
+Jwt(Spring Security 사용 X)
+

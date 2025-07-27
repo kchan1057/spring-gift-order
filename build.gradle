@@ -48,6 +48,9 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.mockito:mockito-subclass:5.11.0'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // WebClient (외부 API 통신)
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
 }
 
 
