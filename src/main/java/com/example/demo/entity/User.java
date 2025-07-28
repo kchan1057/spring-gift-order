@@ -16,14 +16,17 @@ public class User {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(nullable = false, unique = true)
+  @Column(unique = true)
   private String email;
 
-  @Column(nullable = false)
+  @Column
   private String password;
 
   @Column(nullable = false)
   private String role;
+
+  @Column(unique = true)
+  private Long kakaoId;
 
   protected User() {}
 
@@ -35,9 +38,20 @@ public class User {
   }
 
   public User(String email, String hashedPassword, String role) {
-    this.email = email;
-    this.password = hashedPassword;
+    this(null, email, hashedPassword, role);
+  }
+
+  public User(Long kakaoId, String role){
+    this.kakaoId = kakaoId;
     this.role = role;
+  }
+
+  public Long getKakaoId() {
+    return kakaoId;
+  }
+
+  public void setKakaoId(Long kakaoId) {
+    this.kakaoId = kakaoId;
   }
 
   public boolean isPasswordMatch(String rawInput) {

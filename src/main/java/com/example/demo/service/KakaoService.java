@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.config.KakaoProperties;
 import com.example.demo.dto.kakao.KakaoTokenResponseDto;
+import com.example.demo.dto.kakao.KakaoUserInfoDto;
 import io.netty.handler.codec.http.HttpHeaderValues;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
@@ -20,15 +21,14 @@ public class KakaoService {
   }
 
   public String getAccessTokenFromKakao(String code){
-    KakaoTokenResponseDto kakaoTokenResponseDto = WebClient.create(KAUTH_TOKEN_URL_HOST).post()
+    KakaoTokenResponseDto kakaoTokenResponseDto = WebClient.create("https://kauth.kakao.com").post()
         .uri(uriBuilder -> uriBuilder
-        .scheme("https")
         .path("/oauth/token")
         .queryParam("grant_type", "authorization_code")
         .queryParam("client_id", kakaoProperties.getClientId())
         .queryParam("redirect_uri", kakaoProperties.getRedirectUrl())
         .queryParam("code", code)
-        .build(true))
+        .build())
     .header(HttpHeaders.CONTENT_TYPE, HttpHeaderValues.APPLICATION_X_WWW_FORM_URLENCODED.toString())
         .retrieve()
         .onStatus(HttpStatusCode::is4xxClientError, clientResponse -> Mono.error(new RuntimeException("Invalid Parameter")))
@@ -39,5 +39,22 @@ public class KakaoService {
     //System.out.println("Access Token: " + kakaoTokenResponseDto.getAccessToken());
     //System.out.println("Refresh Token: " + kakaoTokenResponseDto.getRefreshToken());
     return kakaoTokenResponseDto.getAccessToken();
+  }
+
+  public KakaoUserInfoDto getUserInfo(String accessToken){
+
+    return WebClient.create("https://kapi.kakao.com").post()
+                    .uri(uriBuilder -> uriBuilder
+            .path("/v2/user/me")
+            .build())
+                    .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+                    .header(HttpHeaders.CONTENT_TYPE, HttpHeaderValues.APPLICATION_X_WWW_FORM_URLENCODED.toString())
+                    .retrieve()
+                    .onStatus(HttpStatusCode::is4xxClientError,
+            clientResponse -> Mono.error(new RuntimeException("Invalid Token")))
+                    .onStatus(HttpStatusCode::is5xxServerError,
+            clientResponse -> Mono.error(new RuntimeException("Kakao Server Error")))
+                    .bodyToMono(KakaoUserInfoDto.class)
+                    .block();
   }
 }
