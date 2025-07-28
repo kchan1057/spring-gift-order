@@ -41,7 +41,7 @@ public class UserController {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
-    Jwt jwt = jwtProvider.createJwt(user.getId(), user.getEmail(), user.getRole());
+    Jwt jwt = jwtProvider.createJwt(user.getId(), user.getRole());
     refreshTokenService.saveRefreshToken(user, jwt.getRefreshToken());
 
     return ResponseEntity.ok()

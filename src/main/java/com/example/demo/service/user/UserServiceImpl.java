@@ -31,8 +31,8 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User findByEmail(String email) {
-    return userRepository.findByEmail(email)
+  public User findById(Long userId) {
+    return userRepository.findById(userId)
                          .orElseThrow(() -> new UserNotFoundException("사용자를 찾을 수 없습니다."));
   }
 
@@ -54,5 +54,14 @@ public class UserServiceImpl implements UserService {
     String hashedPassword = PasswordHasher.hash(dto.getPassword());
     User user = new User(dto.getEmail(), hashedPassword, "USERS");
     userRepository.save(user);
+  }
+
+  @Override
+  public User findOrCreateByKakaoId(Long kakaoId) {
+    return userRepository.findByKakaoId(kakaoId)
+        .orElseGet(() -> {
+          User user = new User(kakaoId, "USER");
+          return userRepository.save(user);
+        });
   }
 }

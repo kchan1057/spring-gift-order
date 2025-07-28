@@ -6,7 +6,8 @@ import com.example.demo.entity.User;
 public interface UserService {
 
   User login(UserRequestDto dto);
-  User findByEmail(String email);
+  User findById(Long userId);
   void deleteByEmail(String email);
   void signup(UserRequestDto dto);
+  User findOrCreateByKakaoId(Long kakaoId);
 }
