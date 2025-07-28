@@ -42,7 +42,6 @@ public class KakaoService {
   }
 
   public KakaoUserInfoDto getUserInfo(String accessToken){
-
     return WebClient.create("https://kapi.kakao.com").post()
                     .uri(uriBuilder -> uriBuilder
             .path("/v2/user/me")
