@@ -41,3 +41,15 @@ CREATE TABLE wish(
     FOREIGN KEY (product_id) REFERENCES product(id) ON DELETE CASCADE,
     PRIMARY KEY (user_id, product_id)
 );
+
+DROP TABLE IF EXISTS orders CASCADE;
+CREATE TABLE orders (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    option_id BIGINT NOT NULL,
+    quantity INT NOT NULL,
+    message TEXT,
+    created_at DATETIME NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (option_id) REFERENCES product_option(id)
+);
