@@ -9,14 +9,16 @@ import com.example.demo.entity.Order;
 import com.example.demo.entity.Product;
 import com.example.demo.entity.ProductOption;
 import com.example.demo.entity.User;
-import com.example.demo.entity.kakaoMessage.Contents;
-import com.example.demo.entity.kakaoMessage.Links;
+import com.example.demo.dto.kakaoMessage.Contents;
+import com.example.demo.dto.kakaoMessage.Links;
 import com.example.demo.exception.OptionNotFoundException;
 import com.example.demo.repository.OptionRepository;
 import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.WishRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional(readOnly = true)
 @Service
 public class OrderService {
 
@@ -33,23 +35,28 @@ public class OrderService {
     this.kakaoClient = kakaoClient;
   }
 
-  public OrderResponseDto placeOrder(User user, OrderRequestDto dto, String kakaoAccessToken){
+  @Transactional
+  public OrderResponseDto placeOrder(User user, OrderRequestDto dto, String kakaoAccessToken) {
     ProductOption productOption = optionRepository.findById(dto.optionId())
-        .orElseThrow(() -> new OptionNotFoundException("해당 옵션 없음."));
+                                                  .orElseThrow(() -> new OptionNotFoundException("해당 옵션 없음."));
 
     productOption.subtract(dto.quantity());
     optionRepository.save(productOption);
 
     Product wishProduct = productOption.getProduct();
     Long productId = wishProduct.getId();
-
     wishRepository.deleteById_UserIdAndId_ProductId(user.getId(), productId);
 
     Order order = new Order(user, productOption, dto.quantity(), dto.message());
     orderRepository.save(order);
 
-    KakaoObjectTemplateDto templateDto = buildMessageTemplate(order);
-    kakaoClient.sendKakaoMessage(kakaoAccessToken, templateDto);
+
+    try {
+      KakaoObjectTemplateDto templateDto = buildMessageTemplate(order);
+      kakaoClient.sendKakaoMessage(kakaoAccessToken, templateDto);
+    } catch (Exception e) {
+      throw new RuntimeException("메세지 전송 및 주문 실패" + e.getMessage());
+    }
 
     return new OrderResponseDto(
         order.getId(),
@@ -59,6 +66,7 @@ public class OrderService {
         order.getMessage()
     );
   }
+
   private KakaoObjectTemplateDto buildMessageTemplate(Order order) {
     return new KakaoObjectTemplateDto(
         "feed",
