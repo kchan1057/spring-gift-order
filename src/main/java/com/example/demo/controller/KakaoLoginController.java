@@ -7,6 +7,7 @@ import com.example.demo.jwt.Jwt;
 import com.example.demo.jwt.JwtProvider;
 import com.example.demo.client.KakaoClient;
 import com.example.demo.service.user.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("")
+@Slf4j
 public class KakaoLoginController {
 
   private final KakaoClient kakaoClient;
@@ -31,11 +33,10 @@ public class KakaoLoginController {
 
   @GetMapping("/callback")
   public ResponseEntity<Jwt> callback(@RequestParam("code") String code){
-    //System.out.println("카카오 인가 코드: " + code);
     KakaoTokenResponseDto kakaoTokenResponseDto = kakaoClient.getAccessTokenFromKakao(code);
     String accessToken = kakaoTokenResponseDto.getAccessToken();
 
-    System.out.println("카카오 access token: " + accessToken);
+    log.info("카카오 인가 코드: {}", code);
 
     KakaoUserInfoDto kakaoUserInfoDto = kakaoClient.getUserInfo(accessToken);
     Long kakaoId = kakaoUserInfoDto.id();
