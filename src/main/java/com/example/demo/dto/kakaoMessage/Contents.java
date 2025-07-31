@@ -1,4 +1,4 @@
-package com.example.demo.entity.kakaoMessage;
+package com.example.demo.dto.kakaoMessage;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
