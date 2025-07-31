@@ -2,7 +2,7 @@ ALTER TABLE wish ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 ALTER TABLE wish ADD COLUMN updated_at TIMESTAMP;
 
 INSERT INTO product (name, price, image_url)
-VALUES ('시어버터 에센셜 패키지', 30000, 'https://example.com/strawberry.jpg');
+VALUES ('시어버터 에센셜 패키지', 30000, 'http://example.com');
 
 INSERT INTO product_option (option_name, quantity, product_id)
 VALUES ('01. [Best] 시어버터 핸드 & 시어 스틱 립 밤', 567, 1);

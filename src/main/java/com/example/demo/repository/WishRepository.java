@@ -11,4 +11,6 @@ public interface WishRepository extends JpaRepository<Wish, WishId> {
 
   @EntityGraph(attributePaths = {"product"})
   Page<Wish> findAllByUserId(Long userId, Pageable pageable);
+
+  void deleteById_UserIdAndId_ProductId(Long userId, Long productId);
 }

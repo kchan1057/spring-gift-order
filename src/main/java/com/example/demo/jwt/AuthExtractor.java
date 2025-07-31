@@ -17,13 +17,13 @@ public class AuthExtractor {
     }
 
     String token = authHeader.replace("Bearer ", "").trim();
-    String email = extractEmailFromToken(token, jwtProvider);
-    return userService.findByEmail(email);
+    Long userId = extractIdFromToken(token, jwtProvider);
+    return userService.findById(userId);
   }
 
-  private static String extractEmailFromToken(String token, JwtProvider jwtProvider) {
+  private static Long extractIdFromToken(String token, JwtProvider jwtProvider) {
     try {
-      return jwtProvider.getClaims(token).get("email", String.class);
+      return ((Number)jwtProvider.getClaims(token).get("userId")).longValue();
     } catch (Exception e) {
       throw new UnauthorizedException("AccessToken이 유효하지 않습니다.");
     }

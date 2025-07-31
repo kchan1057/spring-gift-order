@@ -26,24 +26,23 @@ public class JwtProvider {
     this.key = Keys.hmacShaKeyFor(secret.getBytes());
   }
 
-  public String createAccessToken(Long userId, String email, String role){
+  public String createAccessToken(Long userId, String role){
     Map<String, Object> claims = new HashMap<>();
     claims.put("userId", userId);
-    claims.put("email", email);
     claims.put("role", role);
     return createToken(claims, getAccessTokenExpireDate());
   }
 
-  public String createRefreshToken(String email, String role){
+  public String createRefreshToken(Long userId, String role){
     Map<String, Object> claims = new HashMap<>();
-    claims.put("email", email);
+    claims.put("userId", userId);
     claims.put("role", role);
     return createToken(claims, getRefreshTokenExpireDate());
   }
 
-  public Jwt createJwt(Long userId, String email, String role){
-    String accessToken = createAccessToken(userId, email, role);
-    String refreshToken = createRefreshToken(email, role);
+  public Jwt createJwt(Long userId, String role){
+    String accessToken = createAccessToken(userId, role);
+    String refreshToken = createRefreshToken(userId, role);
     return new Jwt(accessToken, refreshToken);
   }
 
@@ -71,7 +70,7 @@ public class JwtProvider {
                  .parseClaimsJws(token)
                  .getBody();
     } catch (JwtException e){
-      throw new IllegalArgumentException("유효하지 않은 JWT입니다.");
+      throw new IllegalArgumentException("유효하지 않은 JWT입니다: " + e.getMessage(), e);
     }
   }
 }
