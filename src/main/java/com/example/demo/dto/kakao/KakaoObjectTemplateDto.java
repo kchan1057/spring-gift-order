@@ -1,6 +1,6 @@
 package com.example.demo.dto.kakao;
 
-import com.example.demo.entity.kakaoMessage.Contents;
+import com.example.demo.dto.kakaoMessage.Contents;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
