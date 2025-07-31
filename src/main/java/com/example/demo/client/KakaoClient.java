@@ -4,11 +4,8 @@ import com.example.demo.config.KakaoProperties;
 import com.example.demo.dto.kakao.KakaoObjectTemplateDto;
 import com.example.demo.dto.kakao.KakaoTokenResponseDto;
 import com.example.demo.dto.kakao.KakaoUserInfoDto;
-import com.example.demo.entity.kakaoMessage.Contents;
-import com.example.demo.entity.kakaoMessage.Links;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.aspectj.weaver.patterns.HasThisTypePatternTriedToSneakInSomeGenericOrParameterizedTypePatternMatchingStuffAnywhereVisitor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -18,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient;
-import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
 public class KakaoClient {
